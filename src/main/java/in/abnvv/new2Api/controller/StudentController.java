@@ -1,7 +1,12 @@
 package in.abnvv.new2Api.controller;
 
+import in.abnvv.new2Api.dto.CreateStudentRequestDto;
+import in.abnvv.new2Api.dto.CreateStudentResponseDto;
+import in.abnvv.new2Api.dto.UpdateStudentRequestDto;
+import in.abnvv.new2Api.dto.UpdateStudentResponseDto;
 import in.abnvv.new2Api.entity.Student;
 import in.abnvv.new2Api.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,30 +22,30 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-       Student createdStudent = studentService.createStudent(student);
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@Valid @RequestBody CreateStudentRequestDto studentRequestDto) {
+       CreateStudentResponseDto createdStudent = studentService.createStudent(studentRequestDto);
        return ResponseEntity.ok(createdStudent);
 
     }
     @GetMapping("/get/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Student studentResp = studentService.getStudent(id);
+    public ResponseEntity<CreateStudentResponseDto> getStudent(@PathVariable Long id) {
+        CreateStudentResponseDto studentResp = studentService.getStudent(id);
         if(studentResp == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(studentResp);
     }
     @GetMapping("/getAll")
-    public ResponseEntity<List<Student>> getAllStudents() {
-        List<Student> studentsList = studentService.getAllStudents();
+    public ResponseEntity<List<CreateStudentResponseDto>> getAllStudents() {
+        List<CreateStudentResponseDto> studentsList = studentService.getAllStudents();
         if(studentsList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(studentsList);
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student studentReq) {
-        Student studentResp = studentService.updateStudent(id, studentReq);
+    public ResponseEntity<UpdateStudentResponseDto> updateStudent(@PathVariable Long id, @RequestBody UpdateStudentRequestDto studentReq) {
+        UpdateStudentResponseDto studentResp = studentService.updateStudent(id, studentReq);
         if(studentResp == null) {
             return ResponseEntity.notFound().build();
         }

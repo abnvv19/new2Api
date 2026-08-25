@@ -1,28 +1,17 @@
-package in.abnvv.new2Api.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.springframework.cglib.core.Local;
+package in.abnvv.new2Api.dto;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CreateStudentResponseDto {
     private Long Id;
     private String name;
     private int age;
     private String email;
     private int rollNo;
     private String subject;
+    private String message;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-
-    private boolean deleted;
 
     public Long getId() {
         return Id;
@@ -64,20 +53,20 @@ public class Student {
         this.rollNo = rollNo;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
     public String getSubject() {
         return subject;
     }
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public LocalDateTime getCreatedAt() {
