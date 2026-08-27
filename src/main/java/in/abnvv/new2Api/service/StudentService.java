@@ -5,6 +5,7 @@ import in.abnvv.new2Api.dto.CreateStudentResponseDto;
 import in.abnvv.new2Api.dto.UpdateStudentRequestDto;
 import in.abnvv.new2Api.dto.UpdateStudentResponseDto;
 import in.abnvv.new2Api.entity.Student;
+import in.abnvv.new2Api.exception.ResourceNotFoundException;
 import in.abnvv.new2Api.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,8 @@ public class StudentService {
     public CreateStudentResponseDto getStudent(Long id) {
         Student studentResp = studentRepository
                 .findById(id)
-                .orElse(null);
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Student with id " + id + " not found"));
         return mapToDto(studentResp);
 
     }
