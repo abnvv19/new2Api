@@ -30,11 +30,11 @@ public class StudentService {
         return mapToDto(studentResp);
     }
     public CreateStudentResponseDto getStudent(Long id) {
-        Optional<Student> studentResp = studentRepository.findByIdAndDeletedIsFalse(id);
-        if(studentResp.isPresent()) {
-            return mapToDto(studentResp.get());
-        }
-        return null;
+        Student studentResp = studentRepository
+                .findById(id)
+                .orElse(null);
+        return mapToDto(studentResp);
+
     }
     public List<CreateStudentResponseDto> getAllStudents() {
         List<Student> studentsList = studentRepository.findByDeletedIsFalse();
