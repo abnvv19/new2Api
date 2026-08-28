@@ -30,9 +30,6 @@ public class StudentController {
     @GetMapping("/get/{id}")
     public ResponseEntity<CreateStudentResponseDto> getStudent(@PathVariable Long id) {
         CreateStudentResponseDto studentResp = studentService.getStudent(id);
-        if(studentResp == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(studentResp);
     }
     @GetMapping("/getAll")
