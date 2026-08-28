@@ -7,6 +7,7 @@ import in.abnvv.new2Api.dto.UpdateStudentResponseDto;
 import in.abnvv.new2Api.entity.Student;
 import in.abnvv.new2Api.service.StudentService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,40 +30,28 @@ public class StudentController {
     }
     @GetMapping("/get/{id}")
     public ResponseEntity<CreateStudentResponseDto> getStudent(@PathVariable Long id) {
-        CreateStudentResponseDto studentResp = studentService.getStudent(id);
-        return ResponseEntity.ok(studentResp);
+        return ResponseEntity.ok(studentService.getStudent(id));
     }
     @GetMapping("/getAll")
     public ResponseEntity<List<CreateStudentResponseDto>> getAllStudents() {
         List<CreateStudentResponseDto> studentsList = studentService.getAllStudents();
-        if(studentsList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(studentsList);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<UpdateStudentResponseDto> updateStudent(@PathVariable Long id, @RequestBody UpdateStudentRequestDto studentReq) {
         UpdateStudentResponseDto studentResp = studentService.updateStudent(id, studentReq);
-        if(studentResp == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(studentResp);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
-        Boolean isDeleted = studentService.deleteStudent(id);
-        if(!isDeleted) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok("sucessfully deleted");
+        studentService.deleteStudent(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @PatchMapping("/delete-softly/{id}")
     public ResponseEntity<String> softDeleteStudent(@PathVariable Long id) {
-        Boolean isDeleted = studentService.softDeleteStudent(id);
-        if(!isDeleted) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok("sucessfully deleted");
+        studentService.softDeleteStudent(id);
+
+        return ResponseEntity.noContent().build() ;
     }
 
 }
